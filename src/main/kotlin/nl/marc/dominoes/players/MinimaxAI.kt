@@ -1,6 +1,7 @@
 package nl.marc.dominoes.players
 
 import nl.marc.dominoes.game.BoardSide
+import nl.marc.dominoes.game.DominoStone
 import nl.marc.dominoes.game.Player
 import nl.marc.dominoes.game.PlayerInterface
 import kotlin.math.max
@@ -11,6 +12,8 @@ object MinimaxAI {
     fun createAI(game: PlayerInterface): () -> Unit = { makeMove(game) }
 
     private fun makeMove(game: PlayerInterface) {
+        Thread.sleep(500)
+
         val possibleTurns = getPossibleTurns(game)
         if(possibleTurns.isEmpty()) {
             game.getNewDomino()
@@ -54,14 +57,19 @@ object MinimaxAI {
         }
     }
 
-    private fun getPossibleTurns(game: PlayerInterface) = game.availableDominoes.filter {
-        it.left == game.firstNumber || it.right == game.firstNumber
-    }.map {
-        it to BoardSide.LEFT
-    } + game.availableDominoes.filter {
-        it.left == game.lastNumber || it.right == game.lastNumber
-    }.map {
-        it to BoardSide.RIGHT
+    private fun getPossibleTurns(game: PlayerInterface) = when {
+        game.board.isEmpty() -> game.availableDominoes.map { it to BoardSide.RIGHT }
+        else -> {
+            game.availableDominoes.filter {
+                it.left == game.firstNumber || it.right == game.firstNumber
+            }.map {
+                it to BoardSide.LEFT
+            } + game.availableDominoes.filter {
+                it.left == game.lastNumber || it.right == game.lastNumber
+            }.map {
+                it to BoardSide.RIGHT
+            }
+        }
     }
 }
 
