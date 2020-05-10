@@ -1,5 +1,6 @@
 package nl.marc.dominoes
 
+import nl.marc.dominoes.game.DominoStone
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
