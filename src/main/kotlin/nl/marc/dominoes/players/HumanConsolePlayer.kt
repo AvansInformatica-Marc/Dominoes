@@ -29,7 +29,7 @@ object HumanConsolePlayer {
 
         if(selectedAction == "n" || selectedAction == "new") {
             val newDomino = game.getNewDomino()
-            println(if(newDomino == null) "There are currently no new domino available..." else "You got: $newDomino")
+            println(if(newDomino == null) "No new domino available" else "You got: $newDomino")
         } else if (domino == null) {
             println("⚠ Unknown action, try again...")
             askForAction(game)
@@ -37,7 +37,7 @@ object HumanConsolePlayer {
         } else if(game.board.isEmpty()) {
             game.layDominoOnBoard(domino, BoardSide.LEFT)
         } else {
-            print("Type 'r' to add domino to the right, 'l' to add to the left side of the board: ")
+            print("Choose board side (r/l): ")
             val side = when(readLine()?.toLowerCase()?.trim()) {
                 "r", "right" -> BoardSide.RIGHT
                 "l", "left" -> BoardSide.LEFT
