@@ -7,11 +7,11 @@ import nl.marc.dominoes.players.MinimaxAI
 @ExperimentalStdlibApi
 fun main() {
     val playerThatWon = RegularDominoGame.create(
-        HumanConsolePlayer::createPlayer,
-        MinimaxAI::createAI
+        MinimaxAI::createAI,
+        HumanConsolePlayer::createPlayer
     )
 
     println()
-    println("Player $playerThatWon won!")
+    println(if(playerThatWon == null) "It's tie" else "Player $playerThatWon won!")
     println()
 }
