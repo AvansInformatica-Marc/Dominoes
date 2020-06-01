@@ -18,7 +18,7 @@ class RegularDominoGame private constructor(isTransparent: Boolean): GameInterfa
 
     companion object {
         @ExperimentalStdlibApi
-        fun create(createPlayer1: (PlayerInterface) -> () -> Unit, createPlayer2: (PlayerInterface) -> () -> Unit, isTransparent: Boolean = true): Int {
+        fun create(createPlayer1: (PlayerInterface) -> () -> Unit, createPlayer2: (PlayerInterface) -> () -> Unit, isTransparent: Boolean = true): Int? {
             val game: GameInterface = RegularDominoGame(isTransparent)
 
             val player1 = createPlayer1(PlayerInterface(Player.PLAYER1, game))
@@ -39,7 +39,11 @@ class RegularDominoGame private constructor(isTransparent: Boolean): GameInterfa
                 }
             }
 
-            return if(game.handPlayer1.isEmpty()) 1 else 2
+            return when {
+                game.handPlayer1.isEmpty() -> 1
+                game.handPlayer2.isEmpty() -> 2
+                else -> null
+            }
         }
     }
 }
